@@ -1,24 +1,58 @@
+import Ruta from './ruta.js'
+import Base from './base.js'
 let formularioUno = document.getElementById('formulario1');
 let formularioDos = document.getElementById('formulario2');
 
 formularioUno.addEventListener('submit', validarDatosBase);
 formularioDos.addEventListener('submit', validarDatosTarjeta);
 
+const ruta = new Ruta();
+
 function validarDatosBase(e) {
     e.preventDefault();
 
-    let nombre = document.getElementById('nombre').value;
-    let minutos = document.getElementById('minutos').value;
+    const nombre = document.getElementById('nombre').value;
+    const minutos = document.getElementById('minutos').value;
 
-    console.log(nombre, minutos);
+    if(nombre === '' || minutos === '') {
+        crearMensaje(1, "Todos los espacios deben estar llenos")
+
+        return;
+    } else {
+        const nuevaBase = new Base(nombre, minutos);
+        ruta.agregar(nuevaBase);
+
+        console.log(ruta);
+        return;
+    }
 }
 
 function validarDatosTarjeta(e) {
     e.preventDefault();
 
-    let base = document.getElementById('baseinicio').value;
-    let horaInicio = document.getElementById('horainicio').value;
-    let horafinal = document.getElementById('horafin').value;
+    const base = document.getElementById('baseinicio').value;
+    const horaInicio = document.getElementById('horainicio').value;
+    const horaFinal = document.getElementById('horafin').value;
 
-    console.log(base, horaInicio, horafinal);
+    if(base === '' || horaInicio === '' || horaFinal === '') {
+        crearMensaje(2, "Todos los espacios deben estar llenos")
+    }
+}
+
+
+function crearMensaje(tipo, mensaje) {
+    const divMensaje = document.createElement('p');
+    divMensaje.textContent = mensaje;
+
+    if(tipo === 1) {
+        const espacio = document.querySelector('#mensaje1');
+        espacio.appendChild(divMensaje);
+
+        return;
+    } else {
+        const espacio = document.querySelector('#mensaje2');
+        espacio.appendChild(divMensaje);
+        
+        return;
+    }
 }

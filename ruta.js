@@ -1,7 +1,5 @@
-class Ruta {
+export default class Ruta {
     constructor(){
-        this.anterior = null;
-        this.siguiente = null;
         this.inicio = null;
     }
 
@@ -17,7 +15,6 @@ class Ruta {
 
             aux.siguiente = nodo;
             aux.siguiente.anterior = aux;
-
         }
     }
 }

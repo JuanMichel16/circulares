@@ -1,4 +1,4 @@
-class Base {
+export default class Base {
     /**
      * 
      * @param {String} nombre 
@@ -6,6 +6,8 @@ class Base {
      */
 
     constructor(nombre, minutos) {
+        this.anterior = null;
+        this.siguiente = null;
         this.nombre = nombre;
         this.minutos = minutos
     }
