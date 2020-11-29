@@ -17,6 +17,7 @@ class Ruta {
 
             aux.siguiente = nodo;
             aux.siguiente.anterior = aux;
+
         }
     }
 }

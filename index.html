@@ -7,6 +7,41 @@
 </head>
 <body>
     <h1>Ruta de transporte</h1>
+
+    <div>
+        <h1 class="Titulo"> Bases!</h1>
+        <form id="formulario1" action="#">
+            <div>
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="nombre" placeholder="Nombre Base">
+            </div>
+            <div>
+                <label for="minutos">Tiempo (minutos):</label>
+                <input type="text" id="minutos" placeholder="minutos">
+            </div>
+
+            <button type="submit" class="btn btn-primary">Agregar Base</button>
+        </form>
+    </div>
+    <div>
+        <h1 class="Titulo"> Obtener tarjeta de trabajo!</h1>
+        <form id="formulario2" action="#">
+            <div>
+                <label for="baseInicio">Base a iniciar:</label>
+                <input type="text" id="baseinicio">
+            </div>
+            <div>
+                <label for="horainicio">horario de inicio:</label>
+                <input type="datetime" id="horainicio">
+            </div>
+            <div>
+                <label for="horafin">Horario finalizar:</label>
+                <input type="datetime" id="horafin">
+            </div>
+
+            <button type="submit" class="btn btn-primary">Obtener Tarjeta de trabajo</button>
+        </form>
+    </div>
 </body>
 <script src="app.js" type="module"></script>
 </html>
