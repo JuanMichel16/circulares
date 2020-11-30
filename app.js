@@ -1,9 +1,12 @@
 import Ruta from './ruta.js'
 import Base from './base.js'
-let formularioUno = document.getElementById('formulario1');
-let formularioDos = document.getElementById('formulario2');
 
-formularioUno.addEventListener('submit', validarDatosBase);
+const btnAgregar = document.querySelector('#agregar')
+const btnBuscar = document.querySelector('#buscar')
+const btnEliminar = document.querySelector('#eliminar')
+const btnInsertar = document.querySelector('#insertar')
+const formularioDos = document.getElementById('formulario2');
+
 formularioDos.addEventListener('submit', validarDatosTarjeta);
 
 const ruta = new Ruta();

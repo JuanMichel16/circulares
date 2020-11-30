@@ -6,6 +6,7 @@ export default class Ruta {
     agregar(nodo) {
         if(this.inicio === null) {
             this.inicio = nodo;
+            this.inicio.anterior = this.inicio;
             this.inicio.siguiente = this.inicio;
         } else {
             let aux = this.inicio;
@@ -28,7 +29,6 @@ export default class Ruta {
         while(base != aux.nombre) {
             aux = aux.siguiente;
         }
-
         console.log(aux);
         return aux;        
     }
