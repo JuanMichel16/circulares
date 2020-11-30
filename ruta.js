@@ -26,25 +26,32 @@ export default class Ruta {
     buscar(base) {
         let aux = this.inicio;
 
-        while(base != aux.nombre) {
-            aux = aux.siguiente;
-        }
-        console.log(aux);
-        return aux;        
+        if(aux === null) {
+            console.log('No hay bases existentes')
+        } else {
+            while(base != aux.nombre) {
+                aux = aux.siguiente;
+            }
+            return aux;
+        }   
     }
 
 
     borrar(base) {
-        let aux = this.inicio;
 
-        while(base !== aux.nombre) {
-            aux = aux.siguiente;
-        }
+        if(this.buscar(base) == null) {
+            console.log('No se pudo encontrar la base')
+        } else {
+            let baseBorrar = this.buscar(base);
 
-        aux.anterior.siguiente = aux.siguiente;
-        aux.siguiente.anterior = aux.anterior;
+            //Cambiando las direcciones de la base anterior y siguiente de la base actual.
+            baseBorrar.anterior.siguiente = baseBorrar.siguiente;
+            baseBorrar.siguiente.anterior = baseBorrar.anterior;
+            baseBorrar.siguiente = null;
+            baseBorrar.anterior = null
         
-        return aux;
+            return baseBorrar;
+        }
     }
 
     Imprimir() {
@@ -58,37 +65,45 @@ export default class Ruta {
         }
     }
 
-    insertar(base, casilla) {
+    insertar(base, posicion) {
         let aux = this.inicio;
-        if (casilla == 1) {
+        if (posicion === 1) {
             base.siguiente = aux;
             base.anterior = aux.anterior;
             base.anterior.siguiente = base;
             aux.anterior = base;
             this.inicio = base;
+
+            return base;
         } else {
-            var i = 1;
-            while (i != casilla) {
-                if (aux.siguiente != this.inicio) {
-                    aux = aux.siguiente;
-                    i++;
-                } else {
-                    break;
-                }
+            let i = 1;
+
+            while(i !== posicion) {
+                aux = aux.siguiente;
+                i++
             }
-            if (i == casilla) {
-                try {
-                    base.anterior = aux.anterior;
-                    base.siguiente = aux;
-                    base.anterior.siguiente = base;
-                    base.siguiente.anterior = base;
-                    return true;
-                } catch (error) {
-                    return false;
-                }
-            } else {
-                return false;
-            }
+
+            base.siguiente = aux.siguiente;
+            base.anterior = aux.anterior;
+            aux.anterior.siguiente = base;
+            aux.siguiente.anterior = base
+
+            return base;
         }
+    }
+
+    crearRecorrido(baseInicio, horaInicio, horaFin) {
+        let inicio = this.buscar(baseInicio);
+        let horaActual = horaInicio.getTime();
+        let bases = [];
+
+        while(horaFin.getTime() > horaActual) {
+            horaActual += inicio.minutos*1000*60;
+            bases.push(inicio);
+            inicio = inicio.siguiente
+        }
+
+        console.log(bases)
+
     }
 }

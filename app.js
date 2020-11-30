@@ -1,20 +1,71 @@
 import Ruta from './ruta.js'
 import Base from './base.js'
 
-const btnAgregar = document.querySelector('#agregar')
-const btnBuscar = document.querySelector('#buscar')
-const btnEliminar = document.querySelector('#eliminar')
-const btnInsertar = document.querySelector('#insertar')
+const btnAgregar = document.querySelector('#agregar');
+const btnBuscar = document.querySelector('#buscar');
+const btnEliminar = document.querySelector('#eliminar');
+const btnInsertar = document.querySelector('#insertar');
 const formularioDos = document.getElementById('formulario2');
 
+btnAgregar.addEventListener('click', validarDatosBase);
+btnBuscar.addEventListener('click', buscarBase);
+btnEliminar.addEventListener('click', borrarBase);
+btnInsertar.addEventListener('click', insertarProducto);
 formularioDos.addEventListener('submit', validarDatosTarjeta);
 
 const ruta = new Ruta();
 
+function insertarProducto() {
+    const nombre = (document.getElementById('nombre').value).toLowerCase();
+    const minutos = document.getElementById('minutos').value;
+    const posicion = Number(document.querySelector('#posicion').value);
+
+    if(nombre === '' || posicion === '' || minutos === '') {
+        crearMensaje(1, "Todos los espacios deben estar llenos");
+        return;
+    } else if(isNaN(posicion)) {
+        crearMensaje(1, "Llene los espacios correctamente");
+        return;
+    } else {
+        let baseNueva = new Base(nombre, minutos)
+        let insertar = ruta.insertar(baseNueva, posicion);
+        console.log(insertar)
+        return;
+    }
+}
+
+
+
+function borrarBase() {
+    const nombre = (document.getElementById('nombre').value).toLowerCase();
+
+    if(nombre === '') {
+        crearMensaje(1, "Todos los espacios deben estar llenos");
+        return;
+    } else {
+        let producto = ruta.borrar(nombre);
+        console.log(producto)
+        return;
+    }
+}
+function buscarBase() {
+    const nombre = (document.getElementById('nombre').value).toLowerCase();
+
+    if(nombre === '') {
+        crearMensaje(1, "Todos los espacios deben estar llenos");
+        return;
+    } else {
+        let producto = ruta.buscar(nombre);
+        console.log(producto)
+        return;
+    }
+}
+
+
 function validarDatosBase(e) {
     e.preventDefault();
 
-    const nombre = document.getElementById('nombre').value;
+    const nombre = (document.getElementById('nombre').value).toLowerCase();
     const minutos = document.getElementById('minutos').value;
 
     if(nombre === '' || minutos === '') {
@@ -32,14 +83,42 @@ function validarDatosBase(e) {
 function validarDatosTarjeta(e) {
     e.preventDefault();
 
-    const base = document.getElementById('baseinicio').value;
+    const base = (document.getElementById('baseinicio').value).toLowerCase();
     const horaInicio = document.getElementById('horainicio').value;
     const horaFinal = document.getElementById('horafin').value;
 
     if(base === '' || horaInicio === '' || horaFinal === '') {
         crearMensaje(2, "Todos los espacios deben estar llenos")
     } else {
-        console.log(base, horaInicio, horaFinal);
+
+        //Creando 2 fechas para horario de inicio y otro de fin.
+        let horarioInicio = new Date();
+        let horarioFin = new Date();
+
+        //Obteniendo la hora y minuto seleccionada por el usuario. (hora inicio)
+        let hora1 = horaInicio.slice(0, 2);
+        let minutos1 = horaInicio.slice(3, 5);
+
+        //Obteniendo la hora y minuto seleccionado por el usuario. (hora fin)
+        let hora2 = horaFinal.slice(0, 2);
+        let minutos2 = horaFinal.slice(3, 5);
+
+        //Modificando la hora y minutos de la fecha de inicio
+        horarioInicio.setHours(hora1);
+        horarioInicio.setMinutes(minutos1);
+        horarioInicio.setSeconds('00');
+
+        //Modificando hora y minutos de la fecha de finalizar
+        horarioFin.setHours(hora2);
+        horarioFin.setMinutes(minutos2);
+        horarioFin.setSeconds('00');
+
+        if(horarioInicio < horarioFin) {
+            ruta.crearRecorrido(base, horarioInicio, horarioFin);
+        } else {
+            console.log('Los espacios deben ser llenados correctamente')
+        }
+        
     }
 }
 
@@ -60,3 +139,5 @@ function crearMensaje(tipo, mensaje) {
         return;
     }
 }
+
+
