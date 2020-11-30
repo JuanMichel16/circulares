@@ -15,8 +15,7 @@ function validarDatosBase(e) {
     const minutos = document.getElementById('minutos').value;
 
     if(nombre === '' || minutos === '') {
-        crearMensaje(1, "Todos los espacios deben estar llenos")
-
+        crearMensaje(1, "Todos los espacios deben estar llenos");
         return;
     } else {
         const nuevaBase = new Base(nombre, minutos);
@@ -36,6 +35,8 @@ function validarDatosTarjeta(e) {
 
     if(base === '' || horaInicio === '' || horaFinal === '') {
         crearMensaje(2, "Todos los espacios deben estar llenos")
+    } else {
+        console.log(base, horaInicio, horaFinal);
     }
 }
 
